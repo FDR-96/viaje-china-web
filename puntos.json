@@ -1,6 +1,6 @@
 [
  {
-  "id": 1,
+  "id": "1",
   "name": "Shanghai New International Expo Centre (SNIEC)",
   "zh": "上海新国际博览中心",
   "cat": "Feria",
@@ -25,7 +25,7 @@
   }
  },
  {
-  "id": 2,
+  "id": "2",
   "name": "Aeropuerto Internacional de Pudong (PVG)",
   "zh": "上海浦东国际机场",
   "cat": "Transporte",
@@ -50,7 +50,7 @@
   }
  },
  {
-  "id": 3,
+  "id": "3",
   "name": "Estación de tren Shanghai Hongqiao",
   "zh": "上海虹桥站",
   "cat": "Transporte",
@@ -75,7 +75,7 @@
   }
  },
  {
-  "id": 4,
+  "id": "4",
   "name": "Ibis Shanghai Lianyang",
   "zh": "上海联洋宜必思酒店",
   "cat": "Hospedaje",
@@ -94,7 +94,7 @@
   "how": null
  },
  {
-  "id": 14,
+  "id": "14",
   "name": "Maxrac",
   "zh": "",
   "cat": "Proveedor",
@@ -102,7 +102,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "1 · Shanghai",
-  "km": 15,
+  "km": "15",
   "score": 9,
   "verify": "",
   "lat": 31.21,
@@ -119,7 +119,7 @@
   }
  },
  {
-  "id": 8,
+  "id": "8",
   "name": "Shanghai Calin Logistic",
   "zh": "",
   "cat": "Proveedor",
@@ -127,7 +127,7 @@
   "addr": "",
   "prio": "Media",
   "zone": "1 · Shanghai",
-  "km": 30,
+  "km": "30",
   "score": 7,
   "verify": "",
   "lat": 31.235,
@@ -144,7 +144,7 @@
   }
  },
  {
-  "id": 18,
+  "id": "18",
   "name": "ZS Robotics (Zhejiang Libiao Robotics)",
   "zh": "",
   "cat": "Proveedor",
@@ -152,7 +152,7 @@
   "addr": "",
   "prio": "Baja",
   "zone": "1 · Shanghai",
-  "km": 30,
+  "km": "30",
   "score": 4,
   "verify": "VERIFICAR ubicación: el mapa dice Shanghai; la planilla, Shenzhen",
   "lat": 31.11,
@@ -169,7 +169,7 @@
   }
  },
  {
-  "id": 5,
+  "id": "5",
   "name": "Galaxis Technology",
   "zh": "",
   "cat": "Proveedor",
@@ -177,7 +177,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
-  "km": 100,
+  "km": "100",
   "score": 8,
   "verify": "",
   "lat": 30.752,
@@ -194,7 +194,7 @@
   }
  },
  {
-  "id": 9,
+  "id": "9",
   "name": "Automha",
   "zh": "",
   "cat": "Proveedor",
@@ -202,7 +202,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
-  "km": 110,
+  "km": "110",
   "score": 8,
   "verify": "",
   "lat": 31.299,
@@ -219,7 +219,7 @@
   }
  },
  {
-  "id": 19,
+  "id": "19",
   "name": "Wayzim",
   "zh": "",
   "cat": "Proveedor",
@@ -227,7 +227,7 @@
   "addr": "",
   "prio": "Baja",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
-  "km": 150,
+  "km": "150",
   "score": 4,
   "verify": "",
   "lat": 31.49,
@@ -244,7 +244,7 @@
   }
  },
  {
-  "id": 11,
+  "id": "11",
   "name": "Inform Intelligent Storage Solution",
   "zh": "",
   "cat": "Proveedor",
@@ -252,7 +252,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 300,
+  "km": "300",
   "score": 10,
   "verify": "",
   "lat": 32.1,
@@ -269,7 +269,7 @@
   }
  },
  {
-  "id": 12,
+  "id": "12",
   "name": "NOVA Racking",
   "zh": "",
   "cat": "Proveedor",
@@ -277,7 +277,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 300,
+  "km": "300",
   "score": 9,
   "verify": "",
   "lat": 31.985,
@@ -294,7 +294,7 @@
   }
  },
  {
-  "id": 7,
+  "id": "7",
   "name": "Nanjing Huade Storage",
   "zh": "",
   "cat": "Proveedor",
@@ -302,7 +302,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 290,
+  "km": "290",
   "score": 8,
   "verify": "",
   "lat": 31.96,
@@ -319,7 +319,7 @@
   }
  },
  {
-  "id": 6,
+  "id": "6",
   "name": "Nanjing Ouman Racking",
   "zh": "",
   "cat": "Proveedor",
@@ -327,7 +327,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 300,
+  "km": "300",
   "score": 8,
   "verify": "",
   "lat": 32.06,
@@ -344,7 +344,7 @@
   }
  },
  {
-  "id": 13,
+  "id": "13",
   "name": "Jiangsu Kingmore Storage Equipment",
   "zh": "",
   "cat": "Proveedor",
@@ -352,7 +352,7 @@
   "addr": "",
   "prio": "Media",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 350,
+  "km": "350",
   "score": 7,
   "verify": "",
   "lat": 33.24,
@@ -369,7 +369,7 @@
   }
  },
  {
-  "id": 21,
+  "id": "21",
   "name": "Clip-on (Jiangsu) Technologies",
   "zh": "",
   "cat": "Proveedor",
@@ -377,7 +377,7 @@
   "addr": "",
   "prio": "Baja",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
-  "km": 240,
+  "km": "240",
   "score": 3,
   "verify": "",
   "lat": 31.99,
@@ -394,7 +394,7 @@
   }
  },
  {
-  "id": 15,
+  "id": "15",
   "name": "HWArobotics",
   "zh": "",
   "cat": "Proveedor",
@@ -402,7 +402,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "4 · Lejano (avión)",
-  "km": 1450,
+  "km": "1450",
   "score": 8,
   "verify": "VERIFICAR ubicación: el mapa dice Shenzhen; la planilla, planta en la región de Suzhou",
   "lat": 22.61,
@@ -419,7 +419,7 @@
   }
  },
  {
-  "id": 16,
+  "id": "16",
   "name": "Hai Robotics",
   "zh": "",
   "cat": "Proveedor",
@@ -427,7 +427,7 @@
   "addr": "",
   "prio": "Alta",
   "zone": "4 · Lejano (avión)",
-  "km": 1450,
+  "km": "1450",
   "score": 8,
   "verify": "",
   "lat": 22.55,
@@ -444,7 +444,7 @@
   }
  },
  {
-  "id": 10,
+  "id": "10",
   "name": "Tianjin Master Logistics Equipment",
   "zh": "",
   "cat": "Proveedor",
@@ -452,7 +452,7 @@
   "addr": "",
   "prio": "Media",
   "zone": "4 · Lejano (avión)",
-  "km": 1100,
+  "km": "1100",
   "score": 6,
   "verify": "",
   "lat": 39.128,
@@ -469,7 +469,7 @@
   }
  },
  {
-  "id": 20,
+  "id": "20",
   "name": "BlueSword / Lanjian Intelligent Technology",
   "zh": "",
   "cat": "Proveedor",
@@ -477,7 +477,7 @@
   "addr": "",
   "prio": "Baja",
   "zone": "4 · Lejano (avión)",
-  "km": 850,
+  "km": "850",
   "score": 5,
   "verify": "",
   "lat": 36.651,
@@ -494,7 +494,7 @@
   }
  },
  {
-  "id": 17,
+  "id": "17",
   "name": "Geek+",
   "zh": "",
   "cat": "Proveedor",
@@ -502,7 +502,7 @@
   "addr": "",
   "prio": "Baja",
   "zone": "4 · Lejano (avión)",
-  "km": 1250,
+  "km": "1250",
   "score": 5,
   "verify": "VERIFICAR ubicación: el mapa dice Beijing; la planilla, Shenzhen",
   "lat": 39.904,
