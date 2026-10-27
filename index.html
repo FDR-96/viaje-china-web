@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Viaje China</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   :root {
@@ -138,6 +139,30 @@
 <script>
 (function () {
   "use strict";
+  // initData solo viene con datos cuando la página se abre dentro de Telegram
+  var tg = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData
+    ? window.Telegram.WebApp : null;
+
+  // ---------- Tema y Telegram ----------
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    var p = tg.themeParams || {};
+    var css = document.documentElement.style;
+    if (p.bg_color) css.setProperty("--bg", p.bg_color);
+    if (p.secondary_bg_color) css.setProperty("--bg2", p.secondary_bg_color);
+    if (p.text_color) css.setProperty("--text", p.text_color);
+    if (p.hint_color) css.setProperty("--muted", p.hint_color);
+    if (p.button_color) css.setProperty("--accent", p.button_color);
+    if (p.button_text_color) css.setProperty("--accent-text", p.button_text_color);
+    if (tg.colorScheme) document.documentElement.setAttribute("data-theme", tg.colorScheme);
+  }
+  // Dentro de Telegram los links externos se abren con openLink
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='http']");
+    if (a && tg) { e.preventDefault(); tg.openLink(a.href); }
+  });
+
   function store(key, value) {
     try {
       if (value === undefined) return JSON.parse(localStorage.getItem(key));
@@ -377,9 +402,11 @@
   }
 
   // ---------- Inicio ----------
+  // Pestaña inicial: ?tab=mapa (botones del bot); Telegram usa el # para sus propios datos
+  var start = new URLSearchParams(location.search).get("tab") || location.hash.slice(1);
   render();
   fetchRates();
-  if (location.hash === "#mapa") showTab("mapa");  // los botones del bot abren index.html#mapa
+  if (start === "mapa") showTab("mapa");
 })();
 </script>
 </body>
