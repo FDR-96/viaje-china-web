@@ -16,6 +16,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Shanghai+New+International+Expo+Centre+%28SNIEC%29+Shanghai",
   "amaps": "https://maps.apple.com/?q=Shanghai+New+International+Expo+Centre+%28SNIEC%29+Shanghai",
+  "web": "",
   "how": {
    "mode": "A pie o DiDi",
    "steps": "A pie ~2 km (25–30 min). DiDi ~10 min. Con lluvia o cansancio, DiDi.",
@@ -41,6 +42,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Aeropuerto+Internacional+de+Pudong+%28PVG%29+Shanghai",
   "amaps": "https://maps.apple.com/?q=Aeropuerto+Internacional+de+Pudong+%28PVG%29+Shanghai",
+  "web": "",
   "how": {
    "mode": "DiDi (con valijas) o Maglev",
    "steps": "Opción A: DiDi directo. Opción B: DiDi ~10 min a Longyang Road → Maglev 8 min a PVG. El 02/11 (llegada 07:40) conviene DiDi por las valijas; check-in del hotel desde 14:00.",
@@ -66,6 +68,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Estaci%C3%B3n+de+tren+Shanghai+Hongqiao+Shanghai",
   "amaps": "https://maps.apple.com/?q=Estaci%C3%B3n+de+tren+Shanghai+Hongqiao+Shanghai",
+  "web": "",
   "how": {
    "mode": "Metro L2 o DiDi",
    "steps": "Caminar a Century Park o Science and Technology Museum (L2) → L2 dirección oeste hasta Hongqiao Railway Station, sin combinar. Con valijas o apurado: DiDi.",
@@ -91,6 +94,7 @@
   "exact": true,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Ibis%20Shanghai%20Lianyang%20%E4%B8%8A%E6%B5%B7%E8%81%94%E6%B4%8B%E5%AE%9C%E5%BF%85%E6%80%9D%E9%85%92%E5%BA%97",
   "amaps": "https://maps.apple.com/?q=Ibis%20Shanghai%20Lianyang%20%E4%B8%8A%E6%B5%B7%E8%81%94%E6%B4%8B%E5%AE%9C%E5%BF%85%E6%80%9D%E9%85%92%E5%BA%97",
+  "web": "",
   "how": null
  },
  {
@@ -110,6 +114,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Maxrac+Pudong%2C+Shanghai",
   "amaps": "https://maps.apple.com/?q=Maxrac+Pudong%2C+Shanghai",
+  "web": "https://www.maxrac.com",
   "how": {
    "mode": "DiDi",
    "steps": "DiDi Express desde el hotel a la dirección de la planta (copiarla en chino).",
@@ -135,6 +140,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Shanghai+Calin+Logistic+Shanghai",
   "amaps": "https://maps.apple.com/?q=Shanghai+Calin+Logistic+Shanghai",
+  "web": "https://www.calinrack.com",
   "how": {
    "mode": "DiDi",
    "steps": "Confirmar primero si la visita es en la oficina de Shanghai o en una planta de Jiangsu. Si es en Shanghai: DiDi directo.",
@@ -160,6 +166,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=ZS+Robotics+%28Zhejiang+Libiao+Robotics%29+Minhang%2C+Shanghai",
   "amaps": "https://maps.apple.com/?q=ZS+Robotics+%28Zhejiang+Libiao+Robotics%29+Minhang%2C+Shanghai",
+  "web": "https://www.zsrobotics.com",
   "how": {
    "mode": "DiDi",
    "steps": "DiDi directo a Minhang. Alternativa en metro: L2 hacia el oeste + combinación (~1h20).",
@@ -185,6 +192,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Galaxis+Technology+Jiaxing%2C+Zhejiang",
   "amaps": "https://maps.apple.com/?q=Galaxis+Technology+Jiaxing%2C+Zhejiang",
+  "web": "https://www.galaxis-tech.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "1) Metro L2 o DiDi hasta Hongqiao. 2) Tren G/D Hongqiao → Jiaxing Sur (嘉兴南, ~30 min). 3) DiDi a la planta.",
@@ -210,6 +218,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Automha+Suzhou%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Automha+Suzhou%2C+Jiangsu",
+  "web": "https://automha.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "1) Hasta Hongqiao. 2) Tren a Suzhou (苏州) o Suzhou Industrial Park (苏州园区), ~25–35 min; elegir según la dirección. 3) DiDi a la planta.",
@@ -235,6 +244,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Wayzim+Wuxi%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Wayzim+Wuxi%2C+Jiangsu",
+  "web": "https://www.wayzim.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "1) Hasta Hongqiao. 2) Tren a Wuxi (无锡) o Wuxi Este (无锡东), ~35–50 min. 3) DiDi a la planta.",
@@ -260,6 +270,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Inform+Intelligent+Storage+Solution+Nanjing%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Inform+Intelligent+Storage+Solution+Nanjing%2C+Jiangsu",
+  "web": "https://en.informrack.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "1) Hasta Hongqiao. 2) Tren a Nanjing Sur (南京南, ~1h–1h40). 3) DiDi. Agrupar con NOVA, Huade y Ouman en 1–2 días.",
@@ -285,6 +296,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=NOVA+Racking+Nanjing%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=NOVA+Racking+Nanjing%2C+Jiangsu",
+  "web": "https://www.novaracking.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "Igual que Inform: tren a Nanjing Sur + DiDi. Visitar el mismo día.",
@@ -310,6 +322,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Nanjing+Huade+Storage+Jiangning%2C+Nanjing%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Nanjing+Huade+Storage+Jiangning%2C+Nanjing%2C+Jiangsu",
+  "web": "https://www.huade-rack.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "Tren a Nanjing Sur, que está en Jiangning: DiDi corto hasta la planta.",
@@ -335,6 +348,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Nanjing+Ouman+Racking+Nanjing%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Nanjing+Ouman+Racking+Nanjing%2C+Jiangsu",
+  "web": "https://www.omracking.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "Tren a Nanjing Sur + DiDi. Combinar con Inform/NOVA/Huade.",
@@ -360,6 +374,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Jiangsu+Kingmore+Storage+Equipment+Jinhu%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Jiangsu+Kingmore+Storage+Equipment+Jinhu%2C+Jiangsu",
+  "web": "https://www.kingmoreracking.com",
   "how": {
    "mode": "Tren + DiDi largo",
    "steps": "Tren a Huai'an Este (淮安东, ~2h30–3h) + DiDi ~1h a Jinhu. Ocupa el día entero; verificar horarios.",
@@ -385,6 +400,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Clip-on+%28Jiangsu%29+Technologies+Danyang%2C+Jiangsu",
   "amaps": "https://maps.apple.com/?q=Clip-on+%28Jiangsu%29+Technologies+Danyang%2C+Jiangsu",
+  "web": "https://www.sis-clipon.com",
   "how": {
    "mode": "Tren bala + DiDi",
    "steps": "Tren a Danyang Norte (丹阳北) o Danyang (丹阳), ~1h–1h20, + DiDi. Queda camino a Nanjing: se puede combinar.",
@@ -410,6 +426,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=HWArobotics+Shenzhen%2C+Guangdong",
   "amaps": "https://maps.apple.com/?q=HWArobotics+Shenzhen%2C+Guangdong",
+  "web": "https://www.hwarobotics.com",
   "how": {
    "mode": "Avión",
    "steps": "VERIFICAR ubicación primero (podría estar en Suzhou). Si es Shenzhen: avión PVG o Hongqiao (SHA) → Shenzhen Bao'an (~2h30), dormir 1 noche y combinar con Hai Robotics.",
@@ -435,6 +452,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Hai+Robotics+Bao%27an%2C+Shenzhen",
   "amaps": "https://maps.apple.com/?q=Hai+Robotics+Bao%27an%2C+Shenzhen",
+  "web": "https://www.hairobotics.com",
   "how": {
    "mode": "Avión + DiDi",
    "steps": "Avión a Shenzhen Bao'an; la empresa está en el mismo distrito que el aeropuerto: DiDi corto.",
@@ -460,6 +478,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Tianjin+Master+Logistics+Equipment+Tianjin",
   "amaps": "https://maps.apple.com/?q=Tianjin+Master+Logistics+Equipment+Tianjin",
+  "web": "https://www.master-autogroup.com",
   "how": {
    "mode": "Avión o tren bala",
    "steps": "Tren Hongqiao → Tianjin Sur/Oeste (~4h30–5h30) o avión (~2h). Combinable con Beijing (Tianjin–Beijing ~30 min en tren).",
@@ -485,6 +504,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=BlueSword+%2F+Lanjian+Intelligent+Technology+Jinan%2C+Shandong",
   "amaps": "https://maps.apple.com/?q=BlueSword+%2F+Lanjian+Intelligent+Technology+Jinan%2C+Shandong",
+  "web": "https://www.blueswords.com",
   "how": {
    "mode": "Tren bala",
    "steps": "Tren Hongqiao → Jinan Oeste (济南西, ~3h–4h) + DiDi.",
@@ -510,6 +530,7 @@
   "exact": false,
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Geek%2B+Beijing",
   "amaps": "https://maps.apple.com/?q=Geek%2B+Beijing",
+  "web": "https://www.geekplus.com",
   "how": {
    "mode": "Avión o tren bala",
    "steps": "VERIFICAR ubicación (Beijing o Shenzhen). Si es Beijing: tren a Beijing Sur (~4h30–6h) o avión (~2h15).",

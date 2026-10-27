@@ -313,6 +313,17 @@
         amapWeb: "https://uri.amap.com/marker?position=" + p.lon + "," + p.lat + "&name=" + name
       };
     }
+    // Sin coordenadas: por dirección si la hay (columna "Dirección"), si no por nombre
+    var addr = (p.addr || "").split(" – ")[0];
+    if (addr) {
+      var q = encodeURIComponent(addr);
+      return {
+        google: "https://www.google.com/maps/search/?api=1&query=" + q,
+        apple: "https://maps.apple.com/?q=" + encodeURIComponent(p.name) + "&address=" + q,
+        amapApp: "poi?sourceApplication=viaje&name=" + q + "&keywords=" + q + "&dev=0",
+        amapWeb: "https://uri.amap.com/search?keyword=" + q
+      };
+    }
     return {
       google: p.gmaps, apple: p.amaps,
       amapApp: "poi?sourceApplication=viaje&name=" + name + "&keywords=" + name + "&dev=0",
@@ -346,7 +357,8 @@
       (p.score ? " · interés " + p.score + "/10" : "") + "</div>" +
       (p.addr ? "<div>" + esc(p.addr) + "</div>" : "") +
       (p.km ? "<div>~" + esc(p.km) + " km del hotel</div>" : "") +
-      (p.exact ? "" : '<div style="color:#888">Ubicación aproximada (ciudad): los botones buscan por nombre</div>') +
+      (p.exact ? "" : '<div style="color:#888">Pin aproximado (ciudad): los botones buscan por ' +
+        (p.addr ? "dirección" : "nombre") + "</div>") +
       (p.verify ? '<div class="warn">' + esc(p.verify) + "</div>" : "") +
       (h ? '<div class="how"><b>Cómo llegar:</b> ' + esc(h.mode) +
         (h.time ? " · " + esc(h.time) : "") + (h.cost ? " · " + esc(h.cost) + " (RMB)" : "") +
@@ -355,6 +367,7 @@
       (links.google ? '<a href="' + esc(links.google) + '" target="_blank" rel="noopener">Google Maps</a>' : "") +
       (links.apple ? '<a href="' + esc(links.apple) + '" target="_blank" rel="noopener">Apple Maps</a>' : "") +
       '<a href="#" data-amap="' + points.indexOf(p) + '">Amap 高德</a>' +
+      (p.web ? '<a href="' + esc(p.web) + '" target="_blank" rel="noopener">Web</a>' : "") +
       "</div></div>";
   }
 
