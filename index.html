@@ -303,50 +303,28 @@
   // Con coordenadas exactas (columna "Coordenadas" de la planilla) los botones abren ese punto;
   // si no, buscan por nombre. Las coordenadas se copian de Google Maps, que en China usa el
   // mismo sistema que Amap y Apple Maps (GCJ-02), así que coinciden en las tres apps.
+  // Amap: enlace web con callnative=1, que intenta abrir la app instalada. Se abre en el
+  // navegador del teléfono (tg.openLink, ver el manejador de clics): el visor de Telegram no
+  // acepta androidamap:// ni iosamap:// (ERR_UNKNOWN_URL_SCHEME).
   function mapLinks(p) {
     var name = encodeURIComponent(p.zh || p.name), ll = p.lat + "," + p.lon;
     if (p.exact) {
       return {
         google: "https://www.google.com/maps/search/?api=1&query=" + ll,
         apple: "https://maps.apple.com/?ll=" + ll + "&q=" + encodeURIComponent(p.name),
-        amapApp: "viewMap?sourceApplication=viaje&poiname=" + name + "&lat=" + p.lat + "&lon=" + p.lon + "&dev=0",
-        amapWeb: "https://uri.amap.com/marker?position=" + p.lon + "," + p.lat + "&name=" + name
+        amap: "https://uri.amap.com/marker?position=" + p.lon + "," + p.lat + "&name=" + name +
+          "&src=viaje&callnative=1"
       };
     }
     // Sin coordenadas: por dirección si la hay (columna "Dirección"), si no por nombre
     var addr = (p.addr || "").split(" – ")[0];
-    if (addr) {
-      var q = encodeURIComponent(addr);
-      return {
-        google: "https://www.google.com/maps/search/?api=1&query=" + q,
-        apple: "https://maps.apple.com/?q=" + encodeURIComponent(p.name) + "&address=" + q,
-        amapApp: "poi?sourceApplication=viaje&name=" + q + "&keywords=" + q + "&dev=0",
-        amapWeb: "https://uri.amap.com/search?keyword=" + q
-      };
-    }
+    var q = addr ? encodeURIComponent(addr) : name;
     return {
-      google: p.gmaps, apple: p.amaps,
-      amapApp: "poi?sourceApplication=viaje&name=" + name + "&keywords=" + name + "&dev=0",
-      amapWeb: "https://uri.amap.com/search?keyword=" + name
+      google: addr ? "https://www.google.com/maps/search/?api=1&query=" + q : p.gmaps,
+      apple: addr ? "https://maps.apple.com/?q=" + encodeURIComponent(p.name) + "&address=" + q : p.amaps,
+      amap: "https://uri.amap.com/search?keyword=" + q + "&src=viaje&callnative=1"
     };
   }
-
-  // Amap: primero la aplicación instalada; si en 1,5 s no se abrió, la página web
-  function openAmap(p) {
-    var links = mapLinks(p), ua = navigator.userAgent;
-    var scheme = /iPhone|iPad|iPod/i.test(ua) ? "iosamap://" : /Android/i.test(ua) ? "androidamap://" : null;
-    var web = function () { if (tg) tg.openLink(links.amapWeb); else window.open(links.amapWeb, "_blank"); };
-    if (!scheme) return web();
-    var fallback = setTimeout(function () { if (!document.hidden) web(); }, 1500);
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) clearTimeout(fallback);
-    }, { once: true });
-    window.location.href = scheme + links.amapApp;
-  }
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest("[data-amap]");
-    if (b) { e.preventDefault(); openAmap(points[Number(b.dataset.amap)]); }
-  });
 
   function popup(p) {
     var links = mapLinks(p);
@@ -366,7 +344,7 @@
       '<div class="links">' +
       (links.google ? '<a href="' + esc(links.google) + '" target="_blank" rel="noopener">Google Maps</a>' : "") +
       (links.apple ? '<a href="' + esc(links.apple) + '" target="_blank" rel="noopener">Apple Maps</a>' : "") +
-      '<a href="#" data-amap="' + points.indexOf(p) + '">Amap 高德</a>' +
+      '<a href="' + esc(links.amap) + '" target="_blank" rel="noopener">Amap 高德</a>' +
       (p.web ? '<a href="' + esc(p.web) + '" target="_blank" rel="noopener">Web</a>' : "") +
       "</div></div>";
   }
