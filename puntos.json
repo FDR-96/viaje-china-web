@@ -5,6 +5,7 @@
   "zh": "上海新国际博览中心",
   "cat": "Feria",
   "city": "Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Alta",
   "zone": "0 · Base",
@@ -23,7 +24,27 @@
    "time": "10–30 min",
    "cost": "~15–20 por auto",
    "didi": "Sí"
-  }
+  },
+  "routes": [
+   {
+    "title": "A pie",
+    "cost": "",
+    "steps": [
+     "A pie ~2 km (25–30 min)"
+    ],
+    "time": "10–30 min"
+   },
+   {
+    "title": "DiDi",
+    "cost": "~15–20 por auto",
+    "steps": [
+     "DiDi ~10 min",
+     "Con lluvia o cansancio, DiDi"
+    ],
+    "time": ""
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "2",
@@ -31,6 +52,7 @@
   "zh": "上海浦东国际机场",
   "cat": "Transporte",
   "city": "Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Alta",
   "zone": "0 · Base",
@@ -49,7 +71,26 @@
    "time": "40–50 min",
    "cost": "DiDi ~120–160 por auto · Maglev ~50/pers.",
    "didi": "Sí"
-  }
+  },
+  "routes": [
+   {
+    "title": "DiDi (con valijas)",
+    "cost": "DiDi ~120–160 por auto",
+    "steps": [
+     "DiDi directo"
+    ],
+    "time": "40–50 min"
+   },
+   {
+    "title": "Maglev",
+    "cost": "Maglev ~50/pers.",
+    "steps": [
+     "DiDi ~10 min a Longyang Road → Maglev 8 min a PVG"
+    ],
+    "time": ""
+   }
+  ],
+  "route_note": "El 02/11 (llegada 07:40) conviene DiDi por las valijas; check-in del hotel desde 14:00."
  },
  {
   "id": "3",
@@ -57,6 +98,7 @@
   "zh": "上海虹桥站",
   "cat": "Transporte",
   "city": "Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Media",
   "zone": "0 · Base",
@@ -75,7 +117,26 @@
    "time": "~1 h",
    "cost": "Metro ~7/pers. · DiDi ~120–160 por auto",
    "didi": "Sí"
-  }
+  },
+  "routes": [
+   {
+    "title": "Metro L2",
+    "cost": "Metro ~7/pers.",
+    "steps": [
+     "Caminar a Century Park o Science and Technology Museum (L2) → L2 dirección oeste hasta Hongqiao Railway Station, sin combinar"
+    ],
+    "time": "~1 h"
+   },
+   {
+    "title": "DiDi",
+    "cost": "DiDi ~120–160 por auto",
+    "steps": [
+     "Con valijas o apurado: DiDi"
+    ],
+    "time": ""
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "4",
@@ -83,6 +144,7 @@
   "zh": "上海联洋宜必思酒店",
   "cat": "Hospedaje",
   "city": "Pudong, Shanghai",
+  "city_zh": "上海",
   "addr": "300 Fang Dian Road, Pudong (上海市浦东新区芳甸路300号) – Fuente: Accor, all.accor.com/hotel/6474",
   "prio": "Alta",
   "zone": "0 · Base",
@@ -95,7 +157,9 @@
   "gmaps": "https://www.google.com/maps/search/?api=1&query=Ibis%20Shanghai%20Lianyang%20%E4%B8%8A%E6%B5%B7%E8%81%94%E6%B4%8B%E5%AE%9C%E5%BF%85%E6%80%9D%E9%85%92%E5%BA%97",
   "amaps": "https://maps.apple.com/?q=Ibis%20Shanghai%20Lianyang%20%E4%B8%8A%E6%B5%B7%E8%81%94%E6%B4%8B%E5%AE%9C%E5%BF%85%E6%80%9D%E9%85%92%E5%BA%97",
   "web": "",
-  "how": null
+  "how": null,
+  "routes": [],
+  "route_note": ""
  },
  {
   "id": "14",
@@ -103,6 +167,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Pudong, Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Alta",
   "zone": "1 · Shanghai",
@@ -121,7 +186,18 @@
    "time": "25–35 min",
    "cost": "~40–60 por auto",
    "didi": "Sí"
-  }
+  },
+  "routes": [
+   {
+    "title": "DiDi",
+    "cost": "~40–60 por auto",
+    "steps": [
+     "DiDi Express desde el hotel a la dirección de la planta (copiarla en chino)"
+    ],
+    "time": "25–35 min"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "8",
@@ -129,6 +205,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Media",
   "zone": "1 · Shanghai",
@@ -147,7 +224,19 @@
    "time": "40–60 min",
    "cost": "~70–110 por auto",
    "didi": "Sí (si es en Shanghai)"
-  }
+  },
+  "routes": [
+   {
+    "title": "DiDi",
+    "cost": "~70–110 por auto",
+    "steps": [
+     "Confirmar primero si la visita es en la oficina de Shanghai o en una planta de Jiangsu",
+     "Si es en Shanghai: DiDi directo"
+    ],
+    "time": "40–60 min"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "18",
@@ -155,6 +244,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Minhang, Shanghai",
+  "city_zh": "上海",
   "addr": "",
   "prio": "Baja",
   "zone": "1 · Shanghai",
@@ -173,7 +263,26 @@
    "time": "45–60 min",
    "cost": "~80–120 por auto",
    "didi": "Sí"
-  }
+  },
+  "routes": [
+   {
+    "title": "DiDi",
+    "cost": "~80–120 por auto",
+    "steps": [
+     "DiDi directo a Minhang"
+    ],
+    "time": "45–60 min"
+   },
+   {
+    "title": "Metro",
+    "cost": "",
+    "steps": [
+     "L2 hacia el oeste + combinación (~1h20)"
+    ],
+    "time": ""
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "5",
@@ -181,6 +290,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Jiaxing, Zhejiang",
+  "city_zh": "嘉兴",
   "addr": "",
   "prio": "Alta",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
@@ -199,7 +309,28 @@
    "time": "2h–2h30",
    "cost": "Tren ~35–45/pers. + DiDi local",
    "didi": "Posible: ~100 km, 1h30–2h, ~300–400 por auto (conviene si van 3)"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~35–45/pers. + DiDi local",
+    "steps": [
+     "Metro L2 o DiDi hasta Hongqiao",
+     "Tren G/D Hongqiao → Jiaxing Sur (嘉兴南, ~30 min)",
+     "DiDi a la planta"
+    ],
+    "time": "2h–2h30"
+   },
+   {
+    "title": "DiDi directo",
+    "steps": [
+     "~100 km, 1h30–2h, ~300–400 por auto (conviene si van 3)"
+    ],
+    "time": "",
+    "cost": ""
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "9",
@@ -207,6 +338,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Suzhou, Jiangsu",
+  "city_zh": "苏州",
   "addr": "",
   "prio": "Alta",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
@@ -225,7 +357,28 @@
    "time": "2h–2h30",
    "cost": "Tren ~35–45/pers. + DiDi local",
    "didi": "Posible: ~110 km, 1h45–2h, ~350–450 por auto"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~35–45/pers. + DiDi local",
+    "steps": [
+     "Hasta Hongqiao",
+     "Tren a Suzhou (苏州) o Suzhou Industrial Park (苏州园区), ~25–35 min; elegir según la dirección",
+     "DiDi a la planta"
+    ],
+    "time": "2h–2h30"
+   },
+   {
+    "title": "DiDi directo",
+    "steps": [
+     "~110 km, 1h45–2h, ~350–450 por auto"
+    ],
+    "time": "",
+    "cost": ""
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "19",
@@ -233,6 +386,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Wuxi, Jiangsu",
+  "city_zh": "无锡",
   "addr": "",
   "prio": "Baja",
   "zone": "2 · Cercano (Suzhou/Jiaxing/Wuxi)",
@@ -251,7 +405,20 @@
    "time": "2h–2h45",
    "cost": "Tren ~55–75/pers.",
    "didi": "No conviene"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~55–75/pers.",
+    "steps": [
+     "Hasta Hongqiao",
+     "Tren a Wuxi (无锡) o Wuxi Este (无锡东), ~35–50 min",
+     "DiDi a la planta"
+    ],
+    "time": "2h–2h45"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "11",
@@ -259,6 +426,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Nanjing, Jiangsu",
+  "city_zh": "南京",
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -277,7 +445,20 @@
    "time": "3h–3h30",
    "cost": "Tren ~135–145/pers. (2ª clase)",
    "didi": "No (~300 km)"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~135–145/pers. (2ª clase)",
+    "steps": [
+     "Hasta Hongqiao",
+     "Tren a Nanjing Sur (南京南, ~1h–1h40)",
+     "DiDi. Agrupar con NOVA, Huade y Ouman en 1–2 días"
+    ],
+    "time": "3h–3h30"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "12",
@@ -285,6 +466,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Nanjing, Jiangsu",
+  "city_zh": "南京",
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -303,7 +485,19 @@
    "time": "3h–3h30",
    "cost": "Tren ~135–145/pers.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~135–145/pers.",
+    "steps": [
+     "Igual que Inform: tren a Nanjing Sur + DiDi",
+     "Visitar el mismo día"
+    ],
+    "time": "3h–3h30"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "7",
@@ -311,6 +505,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Jiangning, Nanjing, Jiangsu",
+  "city_zh": "南京",
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -329,7 +524,18 @@
    "time": "2h45–3h15",
    "cost": "Tren ~135–145/pers.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~135–145/pers.",
+    "steps": [
+     "Tren a Nanjing Sur, que está en Jiangning: DiDi corto hasta la planta"
+    ],
+    "time": "2h45–3h15"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "6",
@@ -337,6 +543,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Nanjing, Jiangsu",
+  "city_zh": "南京",
   "addr": "",
   "prio": "Alta",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -355,7 +562,19 @@
    "time": "3h–3h30",
    "cost": "Tren ~135–145/pers.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~135–145/pers.",
+    "steps": [
+     "Tren a Nanjing Sur + DiDi",
+     "Combinar con Inform/NOVA/Huade"
+    ],
+    "time": "3h–3h30"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "13",
@@ -363,6 +582,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Jinhu, Jiangsu",
+  "city_zh": "淮安",
   "addr": "",
   "prio": "Media",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -381,7 +601,19 @@
    "time": "4h–4h30",
    "cost": "Tren ~170–230/pers. + DiDi ~150 por auto",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren + DiDi largo",
+    "cost": "Tren ~170–230/pers. + DiDi ~150 por auto",
+    "steps": [
+     "Tren a Huai'an Este (淮安东, ~2h30–3h) + DiDi ~1h a Jinhu",
+     "Ocupa el día entero; verificar horarios"
+    ],
+    "time": "4h–4h30"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "21",
@@ -389,6 +621,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Danyang, Jiangsu",
+  "city_zh": "丹阳",
   "addr": "",
   "prio": "Baja",
   "zone": "3 · Jiangsu centro (Nanjing y alrededores)",
@@ -407,7 +640,19 @@
    "time": "2h30–3h",
    "cost": "Tren ~90–110/pers.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala + DiDi",
+    "cost": "Tren ~90–110/pers.",
+    "steps": [
+     "Tren a Danyang Norte (丹阳北) o Danyang (丹阳), ~1h–1h20, + DiDi",
+     "Queda camino a Nanjing: se puede combinar"
+    ],
+    "time": "2h30–3h"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "15",
@@ -415,6 +660,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Shenzhen, Guangdong",
+  "city_zh": "深圳",
   "addr": "",
   "prio": "Alta",
   "zone": "4 · Lejano (avión)",
@@ -433,7 +679,19 @@
    "time": "5–6 h",
    "cost": "Avión variable",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Avión",
+    "cost": "Avión variable",
+    "steps": [
+     "VERIFICAR ubicación primero (podría estar en Suzhou)",
+     "Si es Shenzhen: avión PVG o Hongqiao (SHA) → Shenzhen Bao'an (~2h30), dormir 1 noche y combinar con Hai Robotics"
+    ],
+    "time": "5–6 h"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "16",
@@ -441,6 +699,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Bao'an, Shenzhen",
+  "city_zh": "深圳",
   "addr": "",
   "prio": "Alta",
   "zone": "4 · Lejano (avión)",
@@ -459,7 +718,18 @@
    "time": "4h30–5h30",
    "cost": "Avión variable",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Avión + DiDi",
+    "cost": "Avión variable",
+    "steps": [
+     "Avión a Shenzhen Bao'an; la empresa está en el mismo distrito que el aeropuerto: DiDi corto"
+    ],
+    "time": "4h30–5h30"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "10",
@@ -467,6 +737,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Tianjin",
+  "city_zh": "天津",
   "addr": "",
   "prio": "Media",
   "zone": "4 · Lejano (avión)",
@@ -485,7 +756,19 @@
    "time": "5–6 h",
    "cost": "Tren ~500/pers. aprox.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Avión o tren bala",
+    "cost": "Tren ~500/pers. aprox.",
+    "steps": [
+     "Tren Hongqiao → Tianjin Sur/Oeste (~4h30–5h30) o avión (~2h)",
+     "Combinable con Beijing (Tianjin–Beijing ~30 min en tren)"
+    ],
+    "time": "5–6 h"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "20",
@@ -493,6 +776,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Jinan, Shandong",
+  "city_zh": "济南",
   "addr": "",
   "prio": "Baja",
   "zone": "4 · Lejano (avión)",
@@ -511,7 +795,18 @@
    "time": "4–5 h",
    "cost": "Tren ~400–450/pers.",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Tren bala",
+    "cost": "Tren ~400–450/pers.",
+    "steps": [
+     "Tren Hongqiao → Jinan Oeste (济南西, ~3h–4h) + DiDi"
+    ],
+    "time": "4–5 h"
+   }
+  ],
+  "route_note": ""
  },
  {
   "id": "17",
@@ -519,6 +814,7 @@
   "zh": "",
   "cat": "Proveedor",
   "city": "Beijing",
+  "city_zh": "北京",
   "addr": "",
   "prio": "Baja",
   "zone": "4 · Lejano (avión)",
@@ -537,6 +833,18 @@
    "time": "5–7 h",
    "cost": "Tren ~550–650/pers. (2ª)",
    "didi": "No"
-  }
+  },
+  "routes": [
+   {
+    "title": "Avión o tren bala",
+    "cost": "Tren ~550–650/pers. (2ª)",
+    "steps": [
+     "VERIFICAR ubicación (Beijing o Shenzhen)",
+     "Si es Beijing: tren a Beijing Sur (~4h30–6h) o avión (~2h15)"
+    ],
+    "time": "5–7 h"
+   }
+  ],
+  "route_note": ""
  }
 ]
