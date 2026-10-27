@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viaje China</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff; --bg2: #f2f3f5; --text: #1c1d21; --muted: #6b6f78;
+    --accent: #2f6fde; --accent-text: #ffffff; --line: #e1e3e8;
+    --good: #2e8540; --warn: #c55a11; --bad: #c0392b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17181c; --bg2: #232429; --text: #eceef2; --muted: #9a9ea8;
+      --accent: #5b93f0; --line: #33353c; --good: #5cb85c; --warn: #f0a050; --bad: #ef6b5b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17181c; --bg2: #232429; --text: #eceef2; --muted: #9a9ea8;
+    --accent: #5b93f0; --line: #33353c; --good: #5cb85c; --warn: #f0a050; --bad: #ef6b5b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  nav { display: flex; gap: 4px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: var(--bg); }
+  nav button {
+    flex: 1; padding: 9px; border: 0; border-radius: 8px; background: var(--bg2);
+    color: var(--text); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  nav button[aria-selected="true"] { background: var(--accent); color: var(--accent-text); }
+  main { flex: 1; min-height: 0; overflow: auto; }
+  section { display: none; }
+  section.active { display: block; }
+  .pad { padding: 14px 16px 24px; }
+  .rates { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+  .chip { background: var(--bg2); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+  .meta { color: var(--muted); font-size: 12px; margin: 6px 0 14px; display: flex; gap: 8px; align-items: center; }
+  .meta button { background: none; border: 0; color: var(--accent); font: inherit; cursor: pointer; padding: 0; }
+  .amount { display: flex; gap: 8px; }
+  .amount input {
+    flex: 1; min-width: 0; font-size: 28px; font-weight: 600; padding: 8px 12px;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text);
+  }
+  .amount select, .settings input, .settings select {
+    border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); color: var(--text);
+    font: inherit; padding: 8px;
+  }
+  .amount select { font-size: 18px; font-weight: 600; }
+  .equiv { color: var(--muted); margin: 8px 0 14px; font-size: 14px; }
+  .results { list-style: none; margin: 0; padding: 0; }
+  .results li {
+    display: grid; grid-template-columns: 1fr auto; gap: 2px 10px;
+    padding: 10px 12px; border-radius: 10px; background: var(--bg2); margin-bottom: 8px;
+  }
+  .results li.best { outline: 2px solid var(--good); }
+  .results .name { font-weight: 600; }
+  .results .ars { font-weight: 700; font-size: 17px; text-align: right; font-variant-numeric: tabular-nums; }
+  .results .detail { color: var(--muted); font-size: 12px; }
+  .results .usd { color: var(--muted); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { font-size: 11px; font-weight: 700; color: var(--good); margin-left: 6px; }
+  details.settings { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 10px; }
+  details.settings summary { cursor: pointer; font-weight: 600; }
+  .settings label { display: grid; grid-template-columns: 1fr 110px; gap: 10px; align-items: center; margin: 10px 0; font-size: 14px; }
+  .settings input { width: 100%; text-align: right; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+  #map { height: 58vh; min-height: 300px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px; }
+  .filters label { background: var(--bg2); border-radius: 999px; padding: 4px 10px; font-size: 13px; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+  .filters .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .filters button { margin-left: auto; border: 0; background: var(--accent); color: var(--accent-text); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .list { padding: 0 16px 24px; }
+  .list h3 { font-size: 13px; color: var(--muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: .03em; }
+  .list button {
+    display: flex; width: 100%; justify-content: space-between; gap: 8px; text-align: left;
+    background: var(--bg2); border: 0; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px;
+    color: var(--text); font: inherit; cursor: pointer;
+  }
+  .list .km { color: var(--muted); white-space: nowrap; font-size: 13px; }
+  .leaflet-popup-content { margin: 10px 12px; font-size: 13px; line-height: 1.35; }
+  .pop h4 { margin: 0 0 2px; font-size: 14px; }
+  .pop .zh { font-size: 16px; margin: 2px 0; }
+  .pop .warn { color: #c55a11; font-weight: 600; }
+  .pop .links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .pop .links a { background: #2f6fde; color: #fff !important; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 12px; }
+  .pop .how { margin-top: 6px; padding-top: 6px; border-top: 1px solid #ddd; }
+</style>
+</head>
+<body>
+<nav role="tablist">
+  <button role="tab" data-tab="calc" aria-selected="true">Calculadora</button>
+  <button role="tab" data-tab="mapa" aria-selected="false">Mapa</button>
+</nav>
+<main>
+  <section id="calc" class="active">
+    <div class="pad">
+      <div class="rates" id="rates"><span class="chip">Cargando cotizaciones…</span></div>
+      <div class="meta"><span id="rates-time"></span><button id="reload" type="button">Actualizar</button></div>
+
+      <div class="amount">
+        <input id="amount" type="number" inputmode="decimal" min="0" step="any" value="100" aria-label="Monto">
+        <select id="currency" aria-label="Moneda">
+          <option value="CNY">CNY ¥</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+      <div class="equiv" id="equiv"></div>
+
+      <ul class="results" id="results"></ul>
+
+      <details class="settings">
+        <summary>Comisiones y ajustes</summary>
+        <label>Comisión Alipay/WeChat con tarjeta extranjera (%)<input id="s-alipay" type="number" step="0.1"></label>
+        <label>…se cobra en pagos mayores a (CNY)<input id="s-alipay-min" type="number" step="1"></label>
+        <label>Comisión de tu banco por consumo en el exterior (%)<input id="s-bank" type="number" step="0.1"></label>
+        <label>Spread de la casa de cambio en China (%)<input id="s-spread" type="number" step="0.1"></label>
+        <label>Dólar al que compraste el efectivo (ARS, vacío = MEP)<input id="s-cash" type="number" step="1"></label>
+        <label>Dólar tarjeta manual (ARS, vacío = automático)<input id="s-card" type="number" step="1"></label>
+        <p class="note">El dólar tarjeta automático es el que publica dolarapi.com (oficial + percepción vigente). Si pagás el resumen con dólares propios no hay percepción: por eso esa opción usa el MEP. Los ajustes quedan guardados en este teléfono.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="mapa">
+    <div id="map"></div>
+    <div class="filters" id="filters"></div>
+    <div class="list" id="list"></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  // initData solo viene con datos cuando la página se abre dentro de Telegram
+  var tg = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData
+    ? window.Telegram.WebApp : null;
+
+  // ---------- Tema y Telegram ----------
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    var p = tg.themeParams || {};
+    var css = document.documentElement.style;
+    if (p.bg_color) css.setProperty("--bg", p.bg_color);
+    if (p.secondary_bg_color) css.setProperty("--bg2", p.secondary_bg_color);
+    if (p.text_color) css.setProperty("--text", p.text_color);
+    if (p.hint_color) css.setProperty("--muted", p.hint_color);
+    if (p.button_color) css.setProperty("--accent", p.button_color);
+    if (p.button_text_color) css.setProperty("--accent-text", p.button_text_color);
+    if (tg.colorScheme) document.documentElement.setAttribute("data-theme", tg.colorScheme);
+  }
+  // Dentro de Telegram los links externos se abren con openLink
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='http']");
+    if (a && tg) { e.preventDefault(); tg.openLink(a.href); }
+  });
+
+  function store(key, value) {
+    try {
+      if (value === undefined) return JSON.parse(localStorage.getItem(key));
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (err) { return null; }
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  var ars = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
+  var dec = new Intl.NumberFormat("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // ---------- Pestañas ----------
+  var mapReady = false;
+  function showTab(name) {
+    document.querySelectorAll("nav button").forEach(function (b) {
+      b.setAttribute("aria-selected", String(b.dataset.tab === name));
+    });
+    document.querySelectorAll("section").forEach(function (s) {
+      s.classList.toggle("active", s.id === name);
+    });
+    if (name === "mapa") { if (!mapReady) initMap(); else map.invalidateSize(); }
+  }
+  document.querySelectorAll("nav button").forEach(function (b) {
+    b.addEventListener("click", function () { showTab(b.dataset.tab); });
+  });
+
+  // ---------- Cotizaciones ----------
+  var rates = store("rates");  // última cotización buena, por si no hay conexión
+  function fetchRates() {
+    document.getElementById("rates-time").textContent = "Actualizando…";
+    return Promise.all([
+      fetch("https://dolarapi.com/v1/dolares").then(function (r) { return r.json(); }),
+      fetch("https://open.er-api.com/v6/latest/USD").then(function (r) { return r.json(); })
+    ]).then(function (res) {
+      var casas = {};
+      res[0].forEach(function (d) { casas[d.casa] = d.venta; });
+      rates = {
+        oficial: casas.oficial, mep: casas.bolsa, blue: casas.blue, tarjeta: casas.tarjeta,
+        cny: res[1].rates.CNY, eur: res[1].rates.EUR, at: Date.now()
+      };
+      store("rates", rates);
+    }).catch(function () { /* se sigue con la cotización guardada */ }).then(render);
+  }
+  document.getElementById("reload").addEventListener("click", fetchRates);
+
+  // ---------- Ajustes ----------
+  var DEFAULTS = { alipay: 3, alipayMin: 200, bank: 0, spread: 2, cash: "", card: "" };
+  var settings = Object.assign({}, DEFAULTS, store("settings") || {});
+  var FIELDS = { "s-alipay": "alipay", "s-alipay-min": "alipayMin", "s-bank": "bank",
+                 "s-spread": "spread", "s-cash": "cash", "s-card": "card" };
+  Object.keys(FIELDS).forEach(function (id) {
+    var el = document.getElementById(id);
+    el.value = settings[FIELDS[id]];
+    el.addEventListener("input", function () {
+      settings[FIELDS[id]] = el.value === "" ? "" : Number(el.value);
+      store("settings", settings);
+      render();
+    });
+  });
+  var amountEl = document.getElementById("amount"), currencyEl = document.getElementById("currency");
+  var last = store("last");
+  if (last) { amountEl.value = last.amount; currencyEl.value = last.currency; }
+  [amountEl, currencyEl].forEach(function (el) {
+    el.addEventListener("input", function () {
+      store("last", { amount: amountEl.value, currency: currencyEl.value });
+      render();
+    });
+  });
+
+  // ---------- Cálculo ----------
+  function render() {
+    var chips = document.getElementById("rates");
+    if (!rates) {
+      chips.innerHTML = '<span class="chip">Sin cotizaciones: revisá la conexión</span>';
+      document.getElementById("rates-time").textContent = "";
+      return;
+    }
+    var card = Number(settings.card) || rates.tarjeta;
+    var cash = Number(settings.cash) || rates.mep;
+    chips.innerHTML = [
+      "1 USD = " + dec.format(rates.cny) + " CNY",
+      "Tarjeta $" + ars.format(card) + (settings.card ? " (manual)" : ""),
+      "MEP $" + ars.format(rates.mep),
+      "Blue $" + ars.format(rates.blue),
+      "Oficial $" + ars.format(rates.oficial)
+    ].map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("");
+    var mins = Math.round((Date.now() - rates.at) / 60000);
+    document.getElementById("rates-time").textContent =
+      "Cotización de hace " + (mins < 1 ? "menos de 1 min" : mins < 120 ? mins + " min" : Math.round(mins / 60) + " h");
+
+    var amount = Number(amountEl.value) || 0;
+    var cur = currencyEl.value;
+    var usd0 = cur === "USD" ? amount : cur === "EUR" ? amount / rates.eur : amount / rates.cny;
+    var cny = usd0 * rates.cny;
+    document.getElementById("equiv").textContent = cur === "CNY"
+      ? "= US$ " + dec.format(usd0)
+      : "= ¥ " + dec.format(cny) + " · US$ " + dec.format(usd0);
+
+    var feeApplies = cny > Number(settings.alipayMin);
+    var alipay = feeApplies ? Number(settings.alipay) / 100 : 0;
+    var bank = Number(settings.bank) / 100, spread = Number(settings.spread) / 100;
+    var alipayNote = feeApplies
+      ? "+" + settings.alipay + "% por superar ¥" + settings.alipayMin
+      : "sin comisión (hasta ¥" + settings.alipayMin + ")";
+    var options = [
+      { name: "Tarjeta, resumen en pesos", usd: usd0 * (1 + bank), rate: card, detail: "dólar tarjeta" },
+      { name: "Tarjeta, resumen con dólares propios", usd: usd0 * (1 + bank), rate: rates.mep, detail: "MEP, sin percepción" },
+      { name: "Alipay / WeChat · resumen en pesos", usd: usd0 * (1 + alipay + bank), rate: card, detail: alipayNote + " · dólar tarjeta" },
+      { name: "Alipay / WeChat · con dólares propios", usd: usd0 * (1 + alipay + bank), rate: rates.mep, detail: alipayNote + " · MEP" },
+      { name: "Efectivo (yuanes cambiados)", usd: usd0 * (1 + spread), rate: cash,
+        detail: "spread " + settings.spread + "% · dólar " + (settings.cash ? "propio" : "MEP") }
+    ];
+    if (bank) options.slice(0, 4).forEach(function (o) { o.detail += " · banco +" + settings.bank + "%"; });
+    options.forEach(function (o) { o.ars = o.usd * o.rate; });
+    options.sort(function (a, b) { return a.ars - b.ars; });
+    document.getElementById("results").innerHTML = options.map(function (o, i) {
+      return '<li class="' + (i === 0 && amount ? "best" : "") + '">' +
+        '<span class="name">' + esc(o.name) + (i === 0 && amount ? '<span class="tag">MÁS BARATO</span>' : "") + "</span>" +
+        '<span class="ars">$ ' + ars.format(o.ars) + "</span>" +
+        '<span class="detail">' + esc(o.detail) + " ($" + ars.format(o.rate) + ")</span>" +
+        '<span class="usd">US$ ' + dec.format(o.usd) + "</span></li>";
+    }).join("");
+  }
+
+  // ---------- Mapa ----------
+  var map, layers = [], points = [];
+  var COLORS = { Alta: "#c0392b", Media: "#e67e22", Baja: "#7f8c8d", base: "#2f6fde", hotel: "#8e44ad" };
+  function group(p) {
+    if (p.cat === "Hospedaje") return "hotel";
+    if (p.cat !== "Proveedor") return "base";
+    return p.prio || "Baja";
+  }
+  var GROUP_LABEL = { hotel: "Hotel", base: "Feria y transporte", Alta: "Prioridad alta", Media: "Media", Baja: "Baja" };
+
+  function popup(p) {
+    var amap = "https://uri.amap.com/" + (p.exact
+      ? "marker?position=" + p.lon + "," + p.lat + "&coordinate=wgs84&name=" + encodeURIComponent(p.zh || p.name)
+      : "search?keyword=" + encodeURIComponent(p.zh || p.name + " " + p.city));
+    var h = p.how;
+    return '<div class="pop"><h4>' + esc(p.name) + "</h4>" +
+      (p.zh ? '<div class="zh">' + esc(p.zh) + "</div>" : "") +
+      "<div>" + esc(p.city) + (p.prio && p.cat === "Proveedor" ? " · prioridad " + esc(p.prio) : "") +
+      (p.score ? " · interés " + p.score + "/10" : "") + "</div>" +
+      (p.addr ? "<div>" + esc(p.addr) + "</div>" : "") +
+      (p.km ? "<div>~" + esc(p.km) + " km del hotel</div>" : "") +
+      (p.exact ? "" : '<div style="color:#888">Ubicación aproximada (ciudad)</div>') +
+      (p.verify ? '<div class="warn">' + esc(p.verify) + "</div>" : "") +
+      (h ? '<div class="how"><b>Cómo llegar:</b> ' + esc(h.mode) +
+        (h.time ? " · " + esc(h.time) : "") + (h.cost ? " · " + esc(h.cost) + " (RMB)" : "") +
+        (h.steps ? "<br>" + esc(h.steps) : "") + "</div>" : "") +
+      '<div class="links">' +
+      (p.gmaps ? '<a href="' + esc(p.gmaps) + '" target="_blank" rel="noopener">Google Maps</a>' : "") +
+      (p.amaps ? '<a href="' + esc(p.amaps) + '" target="_blank" rel="noopener">Apple Maps</a>' : "") +
+      '<a href="' + esc(amap) + '" target="_blank" rel="noopener">Amap 高德</a>' +
+      "</div></div>";
+  }
+
+  function initMap() {
+    mapReady = true;
+    map = L.map("map", { zoomControl: true }).setView([31.23, 121.47], 8);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18, attribution: "&copy; OpenStreetMap"
+    }).addTo(map);
+    fetch("puntos.json").then(function (r) { return r.json(); }).then(function (data) {
+      points = data;
+      var hidden = store("hiddenGroups") || {};
+      points.forEach(function (p) {
+        var g = group(p);
+        var m = L.circleMarker([p.lat, p.lon], {
+          radius: g === "hotel" || g === "base" ? 9 : 7, color: "#fff", weight: 2,
+          fillColor: COLORS[g], fillOpacity: 0.95
+        }).bindPopup(popup(p), { maxWidth: 280 });
+        layers.push({ p: p, g: g, m: m });
+        if (!hidden[g]) m.addTo(map);
+      });
+      buildFilters(hidden);
+      buildList();
+      var near = layers.filter(function (l) { return l.p.lat > 30 && l.p.lat < 33.5 && l.p.lon > 118; });
+      if (near.length) map.fitBounds(L.featureGroup(near.map(function (l) { return l.m; })).getBounds().pad(0.1));
+    }).catch(function () {
+      document.getElementById("list").innerHTML = "<p>No se pudieron cargar los puntos.</p>";
+    });
+  }
+
+  function buildFilters(hidden) {
+    var box = document.getElementById("filters");
+    box.innerHTML = Object.keys(GROUP_LABEL).map(function (g) {
+      return '<label><input type="checkbox" data-g="' + g + '"' + (hidden[g] ? "" : " checked") + '>' +
+        '<span class="dot" style="background:' + COLORS[g] + '"></span>' + GROUP_LABEL[g] + "</label>";
+    }).join("") + '<button type="button" id="locate">Mi ubicación</button>';
+    box.querySelectorAll("input").forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        hidden[cb.dataset.g] = !cb.checked;
+        store("hiddenGroups", hidden);
+        layers.forEach(function (l) {
+          if (l.g === cb.dataset.g) { if (cb.checked) l.m.addTo(map); else map.removeLayer(l.m); }
+        });
+      });
+    });
+    var me;
+    document.getElementById("locate").addEventListener("click", function () {
+      map.locate({ setView: true, maxZoom: 14 });
+    });
+    map.on("locationfound", function (e) {
+      if (me) map.removeLayer(me);
+      me = L.circleMarker(e.latlng, { radius: 8, color: "#fff", weight: 3, fillColor: "#27ae60", fillOpacity: 1 })
+        .bindPopup("Estás acá").addTo(map);
+    });
+    map.on("locationerror", function () { alert("No se pudo obtener tu ubicación."); });
+  }
+
+  function buildList() {
+    var zones = {};
+    layers.forEach(function (l) { (zones[l.p.zone || "Otros"] = zones[l.p.zone || "Otros"] || []).push(l); });
+    var box = document.getElementById("list");
+    box.innerHTML = Object.keys(zones).sort().map(function (z) {
+      var items = zones[z].sort(function (a, b) { return (Number(a.p.km) || 0) - (Number(b.p.km) || 0); });
+      return "<h3>" + esc(z.replace(/^\d+\s*·\s*/, "")) + "</h3>" + items.map(function (l) {
+        return '<button type="button" data-i="' + layers.indexOf(l) + '"><span>' +
+          '<span class="dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:' +
+          COLORS[l.g] + '"></span>' + esc(l.p.name) + "</span>" +
+          '<span class="km">' + (l.p.km ? "~" + esc(l.p.km) + " km" : esc(l.p.city)) + "</span></button>";
+      }).join("");
+    }).join("");
+    box.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var l = layers[Number(b.dataset.i)];
+        if (!map.hasLayer(l.m)) l.m.addTo(map);
+        map.setView(l.m.getLatLng(), 11);
+        l.m.openPopup();
+        document.querySelector("main").scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  }
+
+  // ---------- Inicio ----------
+  var start = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || location.hash.slice(1);
+  render();
+  fetchRates();
+  if (start === "mapa") showTab("mapa");
+})();
+</script>
+</body>
+</html>
