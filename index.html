@@ -300,10 +300,45 @@
   }
   var GROUP_LABEL = { hotel: "Hotel", base: "Feria y transporte", Alta: "Prioridad alta", Media: "Media", Baja: "Baja" };
 
+  // Con coordenadas exactas (columna "Coordenadas" de la planilla) los botones abren ese punto;
+  // si no, buscan por nombre. Las coordenadas se copian de Google Maps, que en China usa el
+  // mismo sistema que Amap y Apple Maps (GCJ-02), así que coinciden en las tres apps.
+  function mapLinks(p) {
+    var name = encodeURIComponent(p.zh || p.name), ll = p.lat + "," + p.lon;
+    if (p.exact) {
+      return {
+        google: "https://www.google.com/maps/search/?api=1&query=" + ll,
+        apple: "https://maps.apple.com/?ll=" + ll + "&q=" + encodeURIComponent(p.name),
+        amapApp: "viewMap?sourceApplication=viaje&poiname=" + name + "&lat=" + p.lat + "&lon=" + p.lon + "&dev=0",
+        amapWeb: "https://uri.amap.com/marker?position=" + p.lon + "," + p.lat + "&name=" + name
+      };
+    }
+    return {
+      google: p.gmaps, apple: p.amaps,
+      amapApp: "poi?sourceApplication=viaje&name=" + name + "&keywords=" + name + "&dev=0",
+      amapWeb: "https://uri.amap.com/search?keyword=" + name
+    };
+  }
+
+  // Amap: primero la aplicación instalada; si en 1,5 s no se abrió, la página web
+  function openAmap(p) {
+    var links = mapLinks(p), ua = navigator.userAgent;
+    var scheme = /iPhone|iPad|iPod/i.test(ua) ? "iosamap://" : /Android/i.test(ua) ? "androidamap://" : null;
+    var web = function () { if (tg) tg.openLink(links.amapWeb); else window.open(links.amapWeb, "_blank"); };
+    if (!scheme) return web();
+    var fallback = setTimeout(function () { if (!document.hidden) web(); }, 1500);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) clearTimeout(fallback);
+    }, { once: true });
+    window.location.href = scheme + links.amapApp;
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-amap]");
+    if (b) { e.preventDefault(); openAmap(points[Number(b.dataset.amap)]); }
+  });
+
   function popup(p) {
-    var amap = "https://uri.amap.com/" + (p.exact
-      ? "marker?position=" + p.lon + "," + p.lat + "&coordinate=wgs84&name=" + encodeURIComponent(p.zh || p.name)
-      : "search?keyword=" + encodeURIComponent(p.zh || p.name + " " + p.city));
+    var links = mapLinks(p);
     var h = p.how;
     return '<div class="pop"><h4>' + esc(p.name) + "</h4>" +
       (p.zh ? '<div class="zh">' + esc(p.zh) + "</div>" : "") +
@@ -311,15 +346,15 @@
       (p.score ? " · interés " + p.score + "/10" : "") + "</div>" +
       (p.addr ? "<div>" + esc(p.addr) + "</div>" : "") +
       (p.km ? "<div>~" + esc(p.km) + " km del hotel</div>" : "") +
-      (p.exact ? "" : '<div style="color:#888">Ubicación aproximada (ciudad)</div>') +
+      (p.exact ? "" : '<div style="color:#888">Ubicación aproximada (ciudad): los botones buscan por nombre</div>') +
       (p.verify ? '<div class="warn">' + esc(p.verify) + "</div>" : "") +
       (h ? '<div class="how"><b>Cómo llegar:</b> ' + esc(h.mode) +
         (h.time ? " · " + esc(h.time) : "") + (h.cost ? " · " + esc(h.cost) + " (RMB)" : "") +
         (h.steps ? "<br>" + esc(h.steps) : "") + "</div>" : "") +
       '<div class="links">' +
-      (p.gmaps ? '<a href="' + esc(p.gmaps) + '" target="_blank" rel="noopener">Google Maps</a>' : "") +
-      (p.amaps ? '<a href="' + esc(p.amaps) + '" target="_blank" rel="noopener">Apple Maps</a>' : "") +
-      '<a href="' + esc(amap) + '" target="_blank" rel="noopener">Amap 高德</a>' +
+      (links.google ? '<a href="' + esc(links.google) + '" target="_blank" rel="noopener">Google Maps</a>' : "") +
+      (links.apple ? '<a href="' + esc(links.apple) + '" target="_blank" rel="noopener">Apple Maps</a>' : "") +
+      '<a href="#" data-amap="' + points.indexOf(p) + '">Amap 高德</a>' +
       "</div></div>";
   }
 
