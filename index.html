@@ -115,6 +115,7 @@
   .place .body { flex: 1; min-width: 0; }
   .place .title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .place .sub { color: var(--muted); font-size: 13px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .place .sub svg.i, .pill svg.i { width: 14px; height: 14px; }
   .place .right { text-align: right; font-size: 13px; color: var(--muted); white-space: nowrap; }
   .place .right b { display: block; color: var(--text); font-size: 14px; }
   .empty { color: var(--muted); text-align: center; padding: 24px; }
@@ -143,6 +144,13 @@
   .pill { font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: var(--surface2); display: inline-flex; gap: 5px; align-items: center; }
   .pill.alta { background: color-mix(in srgb, var(--alta) 14%, transparent); color: var(--alta); }
   .pill.media { background: color-mix(in srgb, var(--media) 16%, transparent); color: var(--media); }
+  .st { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+  .st.confirmado { background: var(--good-soft); color: var(--good); }
+  .st.pendiente { background: var(--warn-soft); color: var(--warn); }
+  .st.visitado { background: var(--surface2); color: var(--muted); }
+  .pill.confirmado { background: var(--good-soft); color: var(--good); }
+  .pill.pendiente { background: var(--warn-soft); color: var(--warn); }
+  .pill.visitado { background: var(--surface2); color: var(--muted); }
   .alert { display: flex; gap: 10px; background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: 10px 12px;
     font-size: 13px; font-weight: 600; margin-top: 12px; }
   .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
@@ -219,6 +227,7 @@
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
     <symbol id="i-taxi" viewBox="0 0 24 24"><path d="M10 4h4l1 3M5 16h14M4 16v-3l2-6h12l2 6v3M6 16v2M18 16v2"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2"/></symbol>
   </defs>
 </svg>
@@ -455,9 +464,12 @@
   }
 
   // ---------- Lugares ----------
-  var map, points = [], markers = [], selected = -1, filter = store("filter") || "all";
+  // ?filter=agenda abre la lista filtrada (lo usa /agenda del bot)
+  var map, points = [], markers = [], selected = -1,
+    filter = new URLSearchParams(location.search).get("filter") || store("filter") || "all";
   var GROUPS = [
     { id: "all", label: "Todos" },
+    { id: "agenda", label: "Agenda", icon: "cal" },
     { id: "base", label: "Hotel, feria y traslados", color: "var(--base)" },
     { id: "Alta", label: "Prioridad alta", color: "var(--alta)" },
     { id: "Media", label: "Media", color: "var(--media)" },
@@ -471,6 +483,7 @@
   }
   function inFilter(p) {
     var g = group(p);
+    if (filter === "agenda") return !!p.date_iso;
     return filter === "all" || filter === g || (filter === "base" && g === "hotel");
   }
   function modeIcon(text) {
@@ -486,6 +499,20 @@
   function zhAddress(p) {
     var runs = (p.addr || "").match(/[㐀-鿿][㐀-鿿0-9０-９\-－号號]*/g) || [];
     return runs.sort(function (a, b) { return b.length - a.length; })[0] || "";
+  }
+  // "jue 05/11" (o el rango "03/11 – 13/11") y la hora si la hay
+  function fmtDate(p) {
+    if (!p.date) return "";
+    var label = p.date;
+    if (p.date_iso && p.date.indexOf("–") < 0) {
+      var wd = new Date(p.date_iso + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short" }).replace(".", "");
+      label = wd + " " + p.date;
+    }
+    return label + (p.hour ? " · " + p.hour : "");
+  }
+  function statusKey(p) { return (p.status || "").toLowerCase(); }
+  function statusBadge(p) {
+    return p.status ? '<span class="st ' + esc(statusKey(p)) + '">' + esc(p.status) + "</span>" : "";
   }
   function plainAddress(p) { return (p.addr || "").split(" – ")[0]; }
 
@@ -548,7 +575,8 @@
   function buildFilters() {
     $("filters").innerHTML = GROUPS.map(function (g) {
       return '<button type="button" data-g="' + g.id + '" aria-pressed="' + (filter === g.id) + '">' +
-        (g.color ? '<span class="dot" style="background:' + g.color + '"></span>' : "") + esc(g.label) + "</button>";
+        (g.color ? '<span class="dot" style="background:' + g.color + '"></span>' : "") +
+        (g.icon ? icon(g.icon) : "") + esc(g.label) + "</button>";
     }).join("");
     $("filters").querySelectorAll("button").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -589,19 +617,27 @@
 
   function renderList(visible) {
     if (!visible.length) { $("list").innerHTML = '<p class="empty">Sin resultados</p>'; return; }
-    var zones = {};
+    // Agenda: agrupado por día y ordenado por fecha y hora; si no, por zona y distancia
+    var agenda = filter === "agenda", groups = {};
     visible.forEach(function (i) {
-      var z = points[i].zone || "Otros";
-      (zones[z] = zones[z] || []).push(i);
+      var p = points[i];
+      var z = agenda ? p.date_iso + "|" + fmtDate(p).split(" · ")[0] : p.zone || "Otros";
+      (groups[z] = groups[z] || []).push(i);
     });
-    $("list").innerHTML = Object.keys(zones).sort().map(function (z) {
-      var items = zones[z].sort(function (a, b) { return (Number(points[a].km) || 0) - (Number(points[b].km) || 0); });
-      return '<h3 class="eyebrow">' + esc(z.replace(/^\d+\s*·\s*/, "")) + "</h3>" + items.map(function (i) {
+    $("list").innerHTML = Object.keys(groups).sort().map(function (z) {
+      var items = groups[z].sort(function (a, b) {
+        return agenda ? (points[a].hour || "").localeCompare(points[b].hour || "")
+          : (Number(points[a].km) || 0) - (Number(points[b].km) || 0);
+      });
+      var title = agenda ? z.split("|")[1] : z.replace(/^\d+\s*·\s*/, "");
+      return '<h3 class="eyebrow">' + esc(title) + "</h3>" + items.map(function (i) {
         var p = points[i], r = (p.routes || [])[0], g = group(p);
         return '<button class="card place" type="button" data-i="' + i + '">' +
           '<span class="dot" style="background:' + COLOR[g] + ';width:10px;height:10px"></span>' +
           '<span class="body"><span class="title">' + esc(p.name) + "</span>" +
-          '<span class="sub">' + esc(p.city) + (p.verify ? ' · <span style="color:var(--warn)">verificar</span>' : "") +
+          '<span class="sub">' + statusBadge(p) + (p.date && !agenda ? " " + icon("cal") + esc(fmtDate(p)) + " ·" : "") +
+          (agenda && p.hour ? esc(p.hour) + " ·" : "") + " " + esc(p.city) +
+          (p.verify ? ' · <span style="color:var(--warn)">verificar</span>' : "") +
           (p.routes && p.routes.length > 1 ? " · " + p.routes.length + " opciones" : "") + "</span></span>" +
           '<span class="right">' + (r && r.time ? "<b>" + esc(r.time) + "</b>" : "") +
           (p.km ? "~" + esc(p.km) + " km" : "") + "</span></button>";
@@ -644,6 +680,14 @@
     var p = points[selected], links = mapLinks(p), g = group(p);
     var catLabel = { hotel: "Hotel", base: p.cat || "Lugar" }[g] || "Proveedor";
     var pills = ['<span class="pill"><span class="dot" style="background:' + COLOR[g] + '"></span>' + esc(catLabel) + "</span>"];
+    if (p.status) pills.push('<span class="pill ' + esc(statusKey(p)) + '">' + esc(p.status) + "</span>");
+    if (p.date) {
+      var tentative = p.cat === "Proveedor" && statusKey(p) === "pendiente";
+      pills.push('<span class="pill ' + (tentative ? "pendiente" : "") + '">' + icon("cal") +
+        (p.cat === "Proveedor" ? "Visita " : "") + esc(fmtDate(p)) + (tentative ? " (tentativa)" : "") + "</span>");
+    } else if (p.cat === "Proveedor") {
+      pills.push('<span class="pill">' + icon("cal") + "Sin fecha de visita</span>");
+    }
     if (p.cat === "Proveedor" && p.prio) pills.push('<span class="pill ' + p.prio.toLowerCase() + '">Prioridad ' + esc(p.prio.toLowerCase()) + "</span>");
     if (p.score) pills.push('<span class="pill">Interés ' + p.score + "/10</span>");
     if (p.km) pills.push('<span class="pill">' + icon("pin") + "~" + esc(p.km) + " km del hotel</span>");
